@@ -1,0 +1,13 @@
+{
+  "title": "color: #70AD47; font-size: 25px; font-weight: 700",
+  "sub-title": "color: #c4c4c4; font-size: 16px",
+  "color-banner": "#70AD47",
+  "color-info": "#555",
+  "color-pass": "#70AD47",
+  "color-skip": "#FFD500",
+  "color-fail": "#F25929",
+  "btn-expand": "#FFD500",
+  "btn-expand-active": "#E6C000",
+  "btn-collapse": "#F25929",
+  "btn-collapse-active": "#CA390C"
+}

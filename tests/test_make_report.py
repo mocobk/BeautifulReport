@@ -1,5 +1,4 @@
 """
-@Version: 1.0
 @Project: BeautyReport
 @Author: Raymond
 @Data: 2017/11/15 下午5:28
