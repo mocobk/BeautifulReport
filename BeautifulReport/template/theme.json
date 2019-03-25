@@ -1,0 +1,11 @@
+{
+  "title": "color: #438a08; font-size: 30px; font-weight: 700",
+  "color-info": "#928A82",
+  "color-success": "#779629",
+  "color-warning": "#F09D0A",
+  "color-danger": "#D2484E",
+  "btn-expand": "#296079",
+  "btn-expand-active": "#296079",
+  "btn-collapse": "#928A82",
+  "btn-collapse-active": "#928A82"
+}
