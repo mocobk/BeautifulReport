@@ -3549,7 +3549,8 @@ table.table-mail tr td {
 }
 
 .ibox-tools {
-	display: inline-block;
+	/*display: inline-block;*/
+	display: none;
 	float: right;
 	margin-top: 0;
 	position: relative;
@@ -3713,7 +3714,7 @@ table.table-mail tr td {
 }
 
 .text-navy {
-	color: ${color-success}
+	color: ${color-pass}
 }
 
 .text-primary {
@@ -3721,7 +3722,7 @@ table.table-mail tr td {
 }
 
 .text-success {
-	color: ${color-success}
+	color: ${color-pass}
 }
 
 .text-info {
@@ -3729,11 +3730,11 @@ table.table-mail tr td {
 }
 
 .text-warning {
-	color: ${color-warning}
+	color: ${color-skip}
 }
 
 .text-danger {
-	color: ${color-danger}
+	color: ${color-fail}
 }
 
 .text-muted {
@@ -6972,9 +6973,9 @@ body.skin-3 {
     outline: 5px auto;
 }
 .chosen-container .chosen-results li.highlighted {
-  background-color: ${color-success};
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(20%, ${color-success}), color-stop(90%, ${color-success}));
-  background-image: linear-gradient(${color-success} 20%, ${color-success} 90%);
+  background-color: ${color-banner};
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(20%, ${color-banner}), color-stop(90%, ${color-banner}));
+  background-image: linear-gradient(${color-banner} 20%, ${color-banner} 90%);
   color: #fff;
 }
     </style>
@@ -6990,7 +6991,7 @@ body.skin-3 {
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5 class="text-info">报告汇总</h5>
+                    <h5 style="${sub-title}">报告汇总</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -7005,13 +7006,13 @@ body.skin-3 {
                         <div class="col-sm-6 b-r" style="height:350px">
                             <form class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label text-navy">用例名称:</label>
+                                    <label class="col-sm-2 control-label text-info">用例名称:</label>
                                     <div class="col-sm-5">
                                         <span class="form-control" id="testName"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label text-navy">用例总数:</label>
+                                    <label class="col-sm-2 control-label text-info">用例总数:</label>
                                     <div class="col-sm-5">
                                         <span class="form-control" id="testAll"></span>
                                     </div>
@@ -7035,13 +7036,13 @@ body.skin-3 {
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label text-navy">开始时间:</label>
+                                    <label class="col-sm-2 control-label text-info">开始时间:</label>
                                     <div class="col-sm-5">
                                         <span class="form-control" id="beginTime"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label text-navy">运行时间:</label>
+                                    <label class="col-sm-2 control-label text-info">运行时间:</label>
                                     <div class="col-sm-5">
                                         <span class="form-control" id="totalTime"></span>
                                     </div>
@@ -7060,7 +7061,7 @@ body.skin-3 {
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5 class="text-info">详细数据</h5>
+                    <h5 style="${sub-title}">详细数据</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -7071,7 +7072,7 @@ body.skin-3 {
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <div class="input-group panel-heading" style="width: 100%; background-color: ${color-success}; margin-bottom: 10px; text-align: left; font-family: Consolas;">
+                    <div class="input-group panel-heading" style="width: 100%; background-color: ${color-banner}; margin-bottom: 10px; text-align: left; font-family: Consolas;">
                         <label style="color: snow">测试类:</label>
                         <select class="chosen-select form-control" data-placeholder="ALL" style="width: 300px;" name="filterClass" id="filterClass">
                             <option value="">ALL</option>
@@ -7251,9 +7252,9 @@ body.skin-3 {
                             {value: resultData["testPass"], name: '成功'}
                         ],
                         color: [
-                                    "${color-danger}",
-                                    "${color-warning}",
-                                    "${color-success}"
+                                    "${color-fail}",
+                                    "${color-skip}",
+                                    "${color-pass}"
                                 ],
                         itemStyle: {
                             emphasis: {

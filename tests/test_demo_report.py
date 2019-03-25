@@ -1,9 +1,8 @@
 """
-@Version: 1.0
 @Project: BeautyReport
-@Author: Raymond
-@Data: 2017/11/15 下午5:28
-@File: test_make_report.py
+@Author: Mocobk
+@Data: 2019/03/18
+@File: test_demo_report.py
 @License: MIT
 """
 import unittest

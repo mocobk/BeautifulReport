@@ -1,5 +1,4 @@
 """
-@Version: 1.1
 @Project: BeautyReport
 @Author: Raymond Mocobk
 @Data: 2019/03/20
@@ -54,9 +53,8 @@ SITE_PAKAGE_PATH = get_python_lib()
 
 class PATH:
     """ all file PATH meta """
-    config_tmp_path = os.path.join(os.path.dirname(__file__), 'template/template.html')
-    theme_path = os.path.join(os.path.dirname(__file__), 'template/theme.json')
-    print(config_tmp_path)
+    template_path = os.path.join(os.path.dirname(__file__), 'template')
+    config_tmp_path = os.path.join(template_path, 'template.html')
 
 
 class MakeResultJson:
@@ -128,8 +126,7 @@ class ReportTestResult(unittest.TestResult):
         self.outputBuffer = None
         self.fields = {
             "testPass": 0,
-            "testResult": [
-            ],
+            "testResult": [],
             "testName": "",
             "testAll": 0,
             "testFail": 0,
@@ -339,16 +336,17 @@ class BeautifulReport(ReportTestResult, PATH):
     def __init__(self, suites):
         super(BeautifulReport, self).__init__(suites)
         self.suites = suites
-        self.log_path = None
+        self.report_dir = None
         self.title = '自动化测试报告'
         self.filename = 'report.html'
 
-    def report(self, description, filename: str = None, log_path='.'):
+    def report(self, description, filename: str = None, report_dir='.', theme='theme_default'):
         """
             生成测试报告,并放在当前运行路径下
-        :param log_path: 生成report的文件存储路径
+        :param report_dir: 生成report的文件存储路径
         :param filename: 生成文件的filename
         :param description: 生成文件的注释
+        :param theme: 报告主题名 theme_default theme_cyan theme_candy theme_memories
         :return:
         """
         if filename:
@@ -357,14 +355,15 @@ class BeautifulReport(ReportTestResult, PATH):
         if description:
             self.title = description
 
-        self.log_path = os.path.abspath(log_path)
+        self.report_dir = os.path.abspath(report_dir)
+        os.makedirs(self.report_dir, exist_ok=True)
         self.suites.run(result=self)
         self.stopTestRun(self.title)
-        self.output_report()
-        text = '\n测试已全部完成, 可打开 {} 查看报告'.format(os.path.join(self.log_path, self.filename))
+        self.output_report(theme)
+        text = '\n测试已全部完成, 可打开 {} 查看报告'.format(os.path.join(self.report_dir, self.filename))
         print(text)
 
-    def output_report(self):
+    def output_report(self, theme):
         """
             生成测试报告到指定路径下
         :return:
@@ -377,19 +376,19 @@ class BeautifulReport(ReportTestResult, PATH):
             return template
 
         template_path = self.config_tmp_path
-        with open(self.theme_path, 'r') as theme:
+        with open(os.path.join(self.template_path, theme+'.json'), 'r') as theme:
             render_params = {
                 **json.load(theme),
                 'resultData': json.dumps(self.fields, ensure_ascii=False, indent=4)
             }
 
-        override_path = os.path.abspath(self.log_path) if \
-            os.path.abspath(self.log_path).endswith('/') else \
-            os.path.abspath(self.log_path) + '/'
+        override_path = os.path.abspath(self.report_dir) if \
+            os.path.abspath(self.report_dir).endswith('/') else \
+            os.path.abspath(self.report_dir) + '/'
 
         with open(template_path, 'rb') as file:
             body = file.read().decode('utf-8')
-        with open(override_path + self.filename, 'w', encoding='utf-8') as write_file:
+        with open(override_path + self.filename, 'w', encoding='utf-8', newline='\n') as write_file:
             html = render_template(render_params, body)
             write_file.write(html)
 
