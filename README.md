@@ -24,11 +24,11 @@ if __name__ == '__main__':
 ### Report API简介
 
 * BeautifulReport.report
-    * report (
-        filename -> 测试报告名称, 如果不指定默认文件名为report.html
-        description -> 测试报告用例名称展示
-        report_dir='.' -> 报告文件写入路径
-        theme='theme_default' -> 报告主题样式 theme_default theme_cyan theme_candy theme_memories
+    * report (  
+        filename -> 测试报告名称, 如果不指定默认文件名为report.html  
+        description -> 测试报告用例名称展示  
+        report_dir='.' -> 报告文件写入路径  
+        theme='theme_default' -> 报告主题样式 theme_default theme_cyan theme_candy theme_memories  
     )
 
 * BeautifulReport.add_test_img

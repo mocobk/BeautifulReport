@@ -1,5 +1,5 @@
 """
-@Project: BeautyReport
+@Project: BeautifulReport
 @Author: Raymond Mocobk
 @Data: 2019/03/20
 @File: __init__.py.py
@@ -26,6 +26,15 @@ HTML_IMG_TEMPLATE = """
     </a>
     <br></br>
 """
+origin_stdout = sys.stdout
+
+
+def output2console(s):
+    """将stdout内容输出到console"""
+    tmp_stdout = sys.stdout
+    sys.stdout = origin_stdout
+    print(s, end='')
+    sys.stdout = tmp_stdout
 
 
 class OutputRedirector(object):
@@ -36,6 +45,7 @@ class OutputRedirector(object):
 
     def write(self, s):
         self.fp.write(s)
+        output2console(s)
 
     def writelines(self, lines):
         self.fp.writelines(lines)
@@ -254,6 +264,8 @@ class ReportTestResult(unittest.TestResult):
         output = self.complete_output()
         logs.append(output)
         logs.extend(self.error_or_failure_text(err))
+        # output traceback info
+        sys.stderr.write(''.join(traceback.format_exception(*err)) + '\n')
         self.failure_count += 1
         self.add_test_type('失败', logs)
         if self.verbosity > 1:
@@ -340,7 +352,7 @@ class BeautifulReport(ReportTestResult, PATH):
         self.title = '自动化测试报告'
         self.filename = 'report.html'
 
-    def report(self, description, filename: str = None, report_dir='.', theme='theme_default'):
+    def report(self, description, filename: str = None, report_dir='.', log_path=None, theme='theme_default'):
         """
             生成测试报告,并放在当前运行路径下
         :param report_dir: 生成report的文件存储路径
@@ -349,6 +361,12 @@ class BeautifulReport(ReportTestResult, PATH):
         :param theme: 报告主题名 theme_default theme_cyan theme_candy theme_memories
         :return:
         """
+        if log_path:
+            import warnings
+            message = ('"log_path" is deprecated, please replace with "report_dir"\n'
+                       "e.g. result.report(filename='测试报告_demo', description='测试报告', report_dir='report')")
+            warnings.warn(message)
+
         if filename:
             self.filename = filename if filename.endswith('.html') else filename + '.html'
 
@@ -376,7 +394,7 @@ class BeautifulReport(ReportTestResult, PATH):
             return template
 
         template_path = self.config_tmp_path
-        with open(os.path.join(self.template_path, theme+'.json'), 'r') as theme:
+        with open(os.path.join(self.template_path, theme + '.json'), 'r') as theme:
             render_params = {
                 **json.load(theme),
                 'resultData': json.dumps(self.fields, ensure_ascii=False, indent=4)

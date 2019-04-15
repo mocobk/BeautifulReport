@@ -1,5 +1,5 @@
 """
-@Project: BeautyReport
+@Project: BeautifulReport
 @Author: Mocobk
 @Data: 2019/03/18
 @File: test_demo_report.py
