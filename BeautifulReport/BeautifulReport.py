@@ -267,13 +267,13 @@ class ReportTestResult(unittest.TestResult):
         # output traceback info
         sys.stderr.write(''.join(traceback.format_exception(*err)) + '\n')
         self.failure_count += 1
-        self.add_test_type('失败', logs)
+        self.add_test_type('错误', logs)
         if self.verbosity > 1:
-            sys.stderr.write('F  ')
+            sys.stderr.write('E  ')
             sys.stderr.write(str(test))
             sys.stderr.write('\n')
         else:
-            sys.stderr.write('F')
+            sys.stderr.write('E')
 
         self._mirrorOutput = True
 

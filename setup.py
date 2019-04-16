@@ -5,7 +5,7 @@ with open("README.md", "r", encoding='utf-8') as fh:
 
 setuptools.setup(
     name="BeautifulReport",
-    version="0.0.8",
+    version="0.0.9",
     author="mocobk",
     author_email="mocobk@163.com",
     description="unittest自动化测试的可视化报告模板",

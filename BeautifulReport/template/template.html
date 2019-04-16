@@ -3549,8 +3549,8 @@ table.table-mail tr td {
 }
 
 .ibox-tools {
-	/*display: inline-block;*/
-	display: none;
+	display: inline-block;
+	/*display: none;*/
 	float: right;
 	margin-top: 0;
 	position: relative;
@@ -7057,6 +7057,12 @@ body.skin-3 {
             </div>
         </div>
     </div>
+    <div id="alert-tips" class="alert alert-danger alert-dismissible" role="alert">
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+         <strong>Warning!</strong> &nbsp;&nbsp;&nbsp;存在报错的用例，请优先查看！
+    </div>
+
     <div class="row">
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
@@ -7116,6 +7122,47 @@ body.skin-3 {
 <script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.min.js"></script>
 <script src="https://cdn.bootcss.com/chosen/1.8.2/chosen.jquery.js"></script>
 <script type="text/javascript">
+    function $childNode(o) {
+        return window.frames[o]
+    }
+
+    function animationHover(o, e) {
+        o = $(o), o.hover(function () {
+            o.addClass("animated " + e)
+        }, function () {
+            window.setTimeout(function () {
+                o.removeClass("animated " + e)
+            }, 2e3)
+        })
+    }
+
+    function WinMove() {
+        var o = "[class*=col]", e = ".ibox-title", i = "[class*=col]";
+        $(o).sortable({
+            handle: e,
+            connectWith: i,
+            tolerance: "pointer",
+            forcePlaceholderSize: !0,
+            opacity: .8
+        }).disableSelection()
+    }
+
+    var $parentNode = window.parent.document;
+    if ($(".tooltip-demo").tooltip({
+        selector: "[data-toggle=tooltip]",
+        container: "body"
+    }), $(".modal").appendTo("body"), $("[data-toggle=popover]").popover(), $(".collapse-link").click(function () {
+        var o = $(this).closest("div.ibox"), e = $(this).find("i"), i = o.find("div.ibox-content");
+        i.slideToggle(200), e.toggleClass("fa-chevron-up").toggleClass("fa-chevron-down"), o.toggleClass("").toggleClass("border-bottom"), setTimeout(function () {
+            o.resize(), o.find("[id^=map-]").resize()
+        }, 50)
+    }), $(".close-link").click(function () {
+        var o = $(this).closest("div.ibox");
+        o.remove()
+    }), top == this) {
+    }
+
+
     var resultData = ${resultData};
     function details(obj) {
         if ($(obj).text() == '展开') {
@@ -7166,6 +7213,8 @@ body.skin-3 {
         $("#filterClass").chosen({search_contains: true});
         $("#filterResult").chosen({search_contains: true});
 
+        var errorFlag = false;
+
         function generateResult(className, caseResult) {
             $("#detailBody").children().remove();
             var filterAll = 0;
@@ -7182,6 +7231,10 @@ body.skin-3 {
                     } else if (n["status"] == '失败') {
                         filterFail += 1;
                         status = "<td><span class='text-danger'>失败</span></td>";
+                    } else if (n["status"] == '错误') {
+                        filterFail += 1;
+                        errorFlag = true;
+                        status = "<td><span class='text-danger'>错误</span></td>";
                     } else if (n["status"] == '跳过') {
                         filterSkip += 1;
                         status = "<td><span class='text-warning'>跳过</span></td>";
@@ -7205,6 +7258,10 @@ body.skin-3 {
         }
 
         generateResult("", "");
+        $("#alert-tips").hide();
+        if (errorFlag) {
+            $("#alert-tips").show();
+        }
 
         $("#filterClass").on('change', function () {
             var className = $("#filterClass").val();
