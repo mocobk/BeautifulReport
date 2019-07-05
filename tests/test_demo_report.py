@@ -10,6 +10,9 @@ import unittest
 
 class UiAutoTestCase(unittest.TestCase):
     """ 测试报告的基础用例Sample """
+    # @classmethod
+    # def setUpClass(cls):
+    #     print(1/0)
 
     def test_home_page_is_ok(self):
         """测试访问首页正常, 并使用title进行断言"""
