@@ -175,12 +175,16 @@ class ReportTestResult(unittest.TestResult):
 
     def stopTest(self, test) -> None:
         """
-            当测试用力执行完成后进行调用
+            当测试用例执行完成后进行调用
         :return:
         """
         self.end_time = '{0:.3} s'.format((time.time() - self.start_time))
         self.result_list.append(self.get_all_result_info_tuple(test))
         self.complete_output()
+        if self.outputBuffer.seekable():
+            self.outputBuffer.seek(0,0)
+            self.outputBuffer.truncate()
+
 
     def complete_output(self):
         """
@@ -238,9 +242,7 @@ class ReportTestResult(unittest.TestResult):
         :param test:
         :return:
         """
-        logs = []
         output = self.complete_output()
-        logs.append(output)
         if self.verbosity > 1:
             sys.stderr.write('ok ')
             sys.stderr.write(str(test))
