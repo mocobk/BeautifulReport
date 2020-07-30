@@ -435,13 +435,18 @@ class BeautifulReport(ReportTestResult, PATH):
             @wraps(func)
             def __wrap(*args, **kwargs):
                 img_path = os.path.abspath('{}'.format(BeautifulReport.img_path))
+                testclasstype = str(type(args[0]))
+                # print(testclasstype)
+                testclassnm = testclasstype[testclasstype.rindex('.')+1:-2]
+                # print(testclassnm)
+                img_nm = testclassnm + '_' + func.__name__
                 try:
                     result = func(*args, **kwargs)
                 except Exception:
                     if 'save_img' in dir(args[0]):
                         save_img = getattr(args[0], 'save_img')
-                        save_img(func.__name__)
-                        data = BeautifulReport.img2base(img_path, pargs[0] + '.png')
+                        save_img(os.path.join(img_path, img_nm + '.png'))
+                        data = BeautifulReport.img2base(img_path, img_nm + '.png')
                         print(HTML_IMG_TEMPLATE.format(data, data))
                     sys.exit(0)
                 print('<br></br>')
