@@ -7118,13 +7118,9 @@ body.skin-3 {
 </div>
 <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script src="js/content.min.js?v=1.0.0"></script>
 <script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.min.js"></script>
 <script src="https://cdn.bootcss.com/chosen/1.8.2/chosen.jquery.js"></script>
 <script type="text/javascript">
-    function $childNode(o) {
-        return window.frames[o]
-    }
 
     function animationHover(o, e) {
         o = $(o), o.hover(function () {
@@ -7147,7 +7143,6 @@ body.skin-3 {
         }).disableSelection()
     }
 
-    var $parentNode = window.parent.document;
     if ($(".tooltip-demo").tooltip({
         selector: "[data-toggle=tooltip]",
         container: "body"

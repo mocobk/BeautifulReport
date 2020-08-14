@@ -435,11 +435,10 @@ class BeautifulReport(ReportTestResult, PATH):
             @wraps(func)
             def __wrap(*args, **kwargs):
                 img_path = os.path.abspath('{}'.format(BeautifulReport.img_path))
-                if not os.access(img_path, os.F_OK):
-                    os.makedirs(img_path)
+                os.makedirs(img_path, exist_ok=True)
                 testclasstype = str(type(args[0]))
                 # print(testclasstype)
-                testclassnm = testclasstype[testclasstype.rindex('.')+1:-2]
+                testclassnm = testclasstype[testclasstype.rindex('.') + 1:-2]
                 # print(testclassnm)
                 img_nm = testclassnm + '_' + func.__name__
                 try:
